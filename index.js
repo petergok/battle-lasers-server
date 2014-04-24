@@ -11,6 +11,10 @@ app.use(logfmt.requestLogger());
 
 app.set('port', Number(process.env.PORT || 8080));
 
+app.configure(function(){
+	app.use(express.bodyParser());
+});
+
 app.put('/registrationId', registerGCM);
 
 function registerGCM(req, res, next) {
