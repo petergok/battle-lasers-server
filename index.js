@@ -11,9 +11,7 @@ app.use(logfmt.requestLogger());
 
 app.set('port', Number(process.env.PORT || 8080));
 
-app.configure(function(){
-	app.use(express.bodyParser());
-});
+app.use(require('connect').bodyParser());
 
 app.put('/registrationId', registerGCM);
 
@@ -21,8 +19,8 @@ function registerGCM(req, res, next) {
 	'use strict';
 	console.log(req.body);
     if (req.body.registrationID) {
+    	res.send('Registered ID');
 		gcm.sendMessage(req.body.registrationID);
-        res.send('Registered ID');
     } else {
 		res.send('Registration ID empty');
     }
