@@ -15,11 +15,12 @@ app.put('/registrationId', registerGCM);
 
 function registerGCM(req, res, next) {
 	'use strict';
+	console.log(req.registrationID);
     if (req.registrationID) {
 		gcm.sendMessage(req.registrationID);
         res.send('Registered ID');
     } else {
-	res.send('Registration ID empty');
+		res.send('Registration ID empty');
     }
 }
 
