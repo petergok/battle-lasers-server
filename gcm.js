@@ -19,7 +19,10 @@ exports.sendMessage = function(registrationId) {
 
 	registrationIds.push(registrationId);
 
+	console.log('sending message');
+
 	sender.send(message, registrationIds, 4, function(err, result) {
 	    console.log(result);
+	    console.log(err);
 	});
 }
