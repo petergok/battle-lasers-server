@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.0.0",
     "node-gcm": "^0.9.10",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "logfmt": "^1.1.2"
   }
 }
