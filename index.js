@@ -1,11 +1,8 @@
-var express = require('express');
-var logfmt = require('logfmt');
-var http = require('http');
-var gcm = require('./gcm');
-
-var app = express();
-
-'use strict';
+var express = require('express'),
+    logfmt = require('logfmt'),
+    http = require('http'),
+    gcm = require('./gcm'),
+    app = express();
 
 app.use(logfmt.requestLogger());
 
@@ -16,14 +13,14 @@ app.use(require('connect').bodyParser());
 app.put('/registrationId', registerGCM);
 
 function registerGCM(req, res, next) {
-	'use strict';
-	console.log(req.query);
-    if (req.query.registrationID) {
-    	res.send('Registered ID');
-		gcm.sendMessage(req.query.registrationID);
-    } else {
-		res.send('Registration ID empty');
-    }
+  'use strict';
+  console.log(req.query);
+  if (req.query.registrationId) {
+    res.send('Registered ID');
+    gcm.sendMessage(req.query.registrationId);
+  } else {
+    res.send('Registration ID empty');
+  }
 }
 
 app.listen(app.get('port'), function(){
