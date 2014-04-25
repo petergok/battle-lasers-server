@@ -42,6 +42,8 @@ function registerPlayer(req, res, next) {
         return;
     }
 
+    console.log(ips[req.ip] + " " + req.ip);
+
     if (ips[req.ip]) {
         ips[req.ip]++;
         if (ips[req.ip] > 10) {
