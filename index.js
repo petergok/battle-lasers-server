@@ -23,7 +23,7 @@ function registerGCM(req, res, next) {
         next();
     }
     
-    var newUser = new Player(req.query.registrationId, req.query.esn, req.query.rating);
+    var newUser = new Player(req.query.esn, req.query.registrationId, req.query.rating);
     users[newUser.hashCode()] = newUser;
 
     console.log(users);
