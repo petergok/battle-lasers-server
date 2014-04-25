@@ -39,7 +39,6 @@ function registerPlayer(req, res, next) {
     'use strict';
     if (!req.query || !req.query.registrationId || !req.query.rating || greylist[req.ip]) {
         res.status(400).send('Parameters missing');
-        next();
         return;
     }
 
@@ -67,8 +66,6 @@ function registerPlayer(req, res, next) {
             startMatch(otherUser, newUser);
         }
     }
-
-    next();
 };
 
 function matchUser(newUser) {
