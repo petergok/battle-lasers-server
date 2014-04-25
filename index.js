@@ -22,7 +22,7 @@ app.put('/player', registerPlayer);
 
 function registerPlayer(req, res, next) {
     'use strict';
-    if (!req.query || !req.query.registrationId || !req.query.rating || greylist[req.ip]) {
+    if (!req.query || !req.query.registrationId || !req.query.rating) {
         res.status(400).send('Parameters missing');
         return;
     }
@@ -33,7 +33,7 @@ function registerPlayer(req, res, next) {
         res.send('User already registered');
         return;
     }
-    
+
     userRegistered[hash] = true;
     newUser.playerId = ++lastId;
     players[newUser.playerId] = newUser;
