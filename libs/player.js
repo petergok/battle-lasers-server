@@ -2,14 +2,21 @@ var Constants = require('./constants');
 
 var gcm = require('node-gcm');
 
-function Player(esn, gcmPushId, rating) {
-	this.esn = esn;
+function Player(gcmPushId, rating) {
 	this.gcmPushId = gcmPushId;
 	this.rating = rating;
 }
 
 Player.prototype.hashCode = function() {
-    return this.esn;
+    return this.gcmPushId;
+};
+
+Player.prototype.canPlay = function(otherUser) {
+    if (otherUser && otherUser.rating) {
+        var diff = otherUser.rating - this.rating;
+        return (diff > -400 && diff < 400);
+    }
+    return false;
 };
 
 Player.prototype.sendMessage = function(message) {
@@ -18,7 +25,7 @@ Player.prototype.sendMessage = function(message) {
 
     registrationIds.push(this.gcmPushId);
 
-    console.log('Sending message to user: ' + this.esn + ', message is: ' + message);
+    console.log('Sending message to user: ' + this.playerId + ', message is: ' + message);
 
     sender.send(message, registrationIds, 4, function(err, result) {
         console.log(result);
