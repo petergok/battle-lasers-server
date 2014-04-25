@@ -10,8 +10,6 @@ var app = express(),
     players = {},
     unmatchedUsers = [],
     matches = {},
-    ips = {},
-    greylist = {},
     lastId = 0;
 
 app.use(logfmt.requestLogger());
@@ -22,54 +20,31 @@ app.use(require('connect').bodyParser());
 
 app.put('/player', registerPlayer);
 
-clearIps();
-clearGreylist();
-
-function clearIps () {
-    ips = {};
-    setTimeout(clearIps, 5000);
-};
-
-function clearGreylist () {
-    greylist = {};
-    setTimeout(clearGreylist, 43200000);
-};
-
 function registerPlayer(req, res, next) {
     'use strict';
     if (!req.query || !req.query.registrationId || !req.query.rating || greylist[req.ip]) {
         res.status(400).send('Parameters missing');
         return;
     }
-
-    console.log(ips[req.ip] + " " + req.ip);
-
-    if (ips[req.ip]) {
-        ips[req.ip]++;
-        if (ips[req.ip] > 10) {
-            greylist[req.ip] = true;
-        }
-    } else {
-        ips[req.ip] = 1;
-    }
     
     var newUser = new Player(req.query.registrationId, req.query.rating);
     var hash = newUser.hashCode();
-    if (!userRegistered[hash]) {
-        userRegistered[hash] = true;
-        newUser.playerId = ++lastId;
-        players[newUser.playerId] = newUser;
-
-        res.send('' + newUser.playerId);
-        console.log('Added user: ' + newUser.playerId);
-
-        var otherUser = matchUser(newUser);
-        if (otherUser) {
-            startMatch(otherUser, newUser);
-        }
+    if (userRegistered[hash]) {
+        res.send('User already registered');
+        return;
     }
+    
+    userRegistered[hash] = true;
+    newUser.playerId = ++lastId;
+    players[newUser.playerId] = newUser;
 
-    res.send('User already registered');
+    res.send('' + newUser.playerId);
+    console.log('Added user: ' + newUser.playerId);
+
+    var otherUser = matchUser(newUser);
+    if (otherUser) {
+        startMatch(otherUser, newUser);
+    }
 };
 
 function matchUser(newUser) {
