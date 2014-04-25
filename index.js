@@ -58,7 +58,7 @@ function registerPlayer(req, res, next) {
         newUser.playerId = ++lastId;
         players[newUser.playerId] = newUser;
 
-        res.send(newUser.playerId);
+        res.send('' + newUser.playerId);
         console.log('Added user: ' + newUser.playerId);
 
         var otherUser = matchUser(newUser);
@@ -66,6 +66,8 @@ function registerPlayer(req, res, next) {
             startMatch(otherUser, newUser);
         }
     }
+
+    res.send('User already registered');
 };
 
 function matchUser(newUser) {
