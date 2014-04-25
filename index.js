@@ -1,8 +1,11 @@
-var express = require('express'),
-    logfmt = require('logfmt'),
-    http = require('http'),
-    gcm = require('./gcm'),
-    app = express();
+var express = require('express');
+var logfmt = require('logfmt');
+var http = require('http');
+
+var Player = require('./libs/player');
+
+var app = express(),
+    users = {};
 
 app.use(logfmt.requestLogger());
 
@@ -13,16 +16,19 @@ app.use(require('connect').bodyParser());
 app.put('/registrationId', registerGCM);
 
 function registerGCM(req, res, next) {
-  'use strict';
-  console.log(req.query);
-  if (req.query.registrationId) {
-    res.send('Registered ID');
-    gcm.sendMessage(req.query.registrationId);
-  } else {
-    res.send('Registration ID empty');
-  }
+    'use strict';
+    console.log(req.query);
+    if (!req.query || !req.query.registrationId || !req.query.esn) {
+        res.status(400).send('Parameters missing');
+        next();
+    }
+    
+    var newUser = new Player(req.query.registrationId, req.query.esn, req.query.rating);
+    users[newUser.hashCode()] = newUser;
+
+    console.log(users);
 }
 
 app.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });
