@@ -5,6 +5,7 @@ var gcm = require('node-gcm');
 var mapLoader = require('./libs/mapLoader');
 
 var Player = require('./libs/player');
+var Match = require('./libs/match')
 
 var app = express(),
     maps = mapLoader.loadMaps(),
