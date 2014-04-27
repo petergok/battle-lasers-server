@@ -73,7 +73,7 @@ function startMatch(playerOne, playerTwo) {
     var messageToOne = new gcm.Message({
         data: {
             messageType: 'startMatch',
-            otherPlayerName: 'Player 1',
+            otherPlayerName: playerTwo.getDisplayName(),
             yourTurn: true,
             map: match.getMapId()
         }
@@ -82,7 +82,7 @@ function startMatch(playerOne, playerTwo) {
     var messageToTwo = new gcm.Message({
         data: {
             messageType: 'startMatch',
-            otherPlayerName: 'Player 2',
+            otherPlayerName: playerOne.getDisplayName(),
             yourTurn: false,
             map: match.getMapId()
         }

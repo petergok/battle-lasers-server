@@ -8,13 +8,13 @@ function Match(playerOne, playerTwo) {
 Match.prototype.sendMessage = function(message, whichPlayer) {
     if (whichPlayer) {
         if (whichPlayer === 1) {
-            playerOne.sendMessage(message);
+            this.playerOne.sendMessage(message);
         } else if (whichPlayer === 2) {
-            playerTwo.sendMessage(message);
+            this.playerTwo.sendMessage(message);
         }
     } else {
-        playerone.sendMessage(message);
-        playerTwo.sendMessage(message);
+        this.playerOne.sendMessage(message);
+        this.playerTwo.sendMessage(message);
     }
 };
 
