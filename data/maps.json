@@ -1,0 +1,53 @@
+{
+	"maps": [{
+		"numberOfMirrors": 6,
+		"rows": [3, 4, 5, 6, 7, 8],
+		"columns": [6, 5, 4, 3, 2, 1],
+		"isHorizontal": [1, 0, 1, 1, 0, 1]
+	}, {
+		"numberOfMirrors": 6,
+		"rows": [5, 4, 5, 6, 7, 6],
+		"columns": [1, 2, 3, 4, 5, 6],
+		"isHorizontal": [0, 0, 0, 0, 0, 0]
+	}, {
+		"numberOfMirrors": 6,
+		"rows": [4, 5, 5, 6, 6, 7],
+		"columns": [2, 3, 4, 3, 4, 5],
+		"isHorizontal": [1, 0, 0, 0, 0, 1]
+	}, {
+		"numberOfMirrors": 8,
+		"rows": [4, 4, 5, 5, 6, 6, 7, 7],
+		"columns": [3, 4, 2, 5, 2, 5, 3, 4],
+		"isHorizontal": [0, 0, 1, 1, 1, 1, 0, 0]
+	}, {
+		"numberOfMirrors": 8,
+		"rows": [4, 4, 5, 5, 6, 6, 7, 7],
+		"columns": [2, 5, 3, 4, 3, 4, 2, 5],
+		"isHorizontal": [0, 0, 0, 1, 1, 0, 0, 0]
+	}, {
+		"numberOfMirrors": 8,
+		"rows": [4, 4, 5, 5, 6, 6, 7, 7],
+		"columns": [2, 5, 3, 4, 3, 4, 2, 5],
+		"isHorizontal": [0, 0, 0, 0, 0, 0, 0, 0]
+	}, {
+		"numberOfMirrors": 12,
+		"rows": [2, 2, 3, 3, 4, 4, 7, 7, 8, 8, 9, 9],
+		"columns": [2, 5, 2, 5, 2, 5, 2, 5, 2, 5, 2, 5],
+		"isHorizontal": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	}, {
+		"numberOfMirrors": 12,
+		"rows": [5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6],
+		"columns": [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6],
+		"isHorizontal": [1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1]
+	}, {
+		"numberOfMirrors": 12,
+		"rows": [4, 5, 4, 4, 5, 4, 7, 6, 7, 7, 6, 7],
+		"columns": [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6],
+		"isHorizontal": [1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1]
+	}, {
+		"numberOfMirrors": 12,
+		"rows": [3, 3, 3, 3, 4, 4, 7, 7, 8, 8, 8, 8],
+		"columns": [2, 3, 4, 5, 3, 4, 3, 4, 2, 3, 4, 5],
+		"isHorizontal": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	}]
+}

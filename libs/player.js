@@ -2,13 +2,24 @@ var Constants = require('./constants');
 
 var gcm = require('node-gcm');
 
-function Player(gcmPushId, rating) {
+var sender = new gcm.Sender(Constants.GCM_API_KEY);
+
+function Player(gcmPushId, rating, userName) {
 	this.gcmPushId = gcmPushId;
 	this.rating = rating;
-}
+    this.userName = userName;
+};
 
-Player.prototype.hashCode = function() {
+Player.prototype.getGcmId = function() {
     return this.gcmPushId;
+};
+
+Player.prototype.getDisplayName = function() {
+    if (this.userName) {
+        return this.userName;
+    } else {
+        return 'Anonymous';
+    }
 };
 
 Player.prototype.canPlay = function(otherUser) {
@@ -20,8 +31,7 @@ Player.prototype.canPlay = function(otherUser) {
 };
 
 Player.prototype.sendMessage = function(message) {
-    var sender = new gcm.Sender(Constants.GCM_API_KEY),
-        registrationIds = [];
+    var registrationIds = [];
 
     registrationIds.push(this.gcmPushId);
 

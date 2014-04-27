@@ -2,21 +2,23 @@ var express = require('express');
 var logfmt = require('logfmt');
 var http = require('http');
 var gcm = require('node-gcm');
+var mapLoader = require('./libs/mapLoader');
 
 var Player = require('./libs/player');
 
 var app = express(),
+    maps = mapLoader.loadMaps(),
     userRegistered = {},
     players = {},
     unmatchedUsers = [],
     matches = {},
+    matches = {},
     lastId = 0;
 
 app.use(logfmt.requestLogger());
+app.use(require('connect').bodyParser());
 
 app.set('port', Number(process.env.PORT || 8080));
-
-app.use(require('connect').bodyParser());
 
 app.put('/player', registerPlayer);
 
@@ -27,8 +29,8 @@ function registerPlayer(req, res, next) {
         return;
     }
     
-    var newUser = new Player(req.query.registrationId, req.query.rating);
-    var hash = newUser.hashCode();
+    var newUser = new Player(req.query.registrationId, req.query.rating, req.query.userName);
+    var hash = newUser.getGcmId();
     if (userRegistered[hash]) {
         res.send('User already registered');
         return;
@@ -60,8 +62,33 @@ function matchUser(newUser) {
     return undefined;
 };
 
-function startMatch(firstPlayer, secondPlayer) {
-    console.log("Creating match between: " + firstPlayer.playerId + " and " + secondPlayer.playerId);
+function startMatch(playerOne, playerTwo) {
+    console.log("Creating match between: " + playerOne.playerId + " and " + playerTwo.playerId);
+
+    var match = new Match(playerOne, playerTwo);
+    matches[playerOne.playerId] = match;
+    matches[playerTwo.playerId] = match;
+
+    var messageToOne = new gcm.Message({
+        data: {
+            messageType: 'startMatch',
+            otherPlayerName: playerTwo.getDisplayName(),
+            yourTurn: true,
+            map: match.getMapId()
+        }
+    });
+
+    var messageToTwo = new gcm.Message({
+        data: {
+            messageType: 'startMatch',
+            otherPlayerName: playerOne.getDisplayName(),
+            yourTurn: false,
+            map: match.getMapId()
+        }
+    });
+
+    match.sendMessage(messageToOne, 1);
+    match.sendMessage(messageToTwo, 2);
 };
 
 app.listen(app.get('port'), function(){
