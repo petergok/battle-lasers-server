@@ -19,6 +19,11 @@ var app = express(),
 app.use(logfmt.requestLogger());
 app.use(require('connect').bodyParser());
 
+if ('development' == app.get('env')) {
+	app.use(express.errorHandler());
+}
+
+
 app.set('port', Number(process.env.PORT || 8080));
 
 app.put('/player', registerPlayer);
