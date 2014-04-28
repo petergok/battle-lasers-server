@@ -79,7 +79,7 @@ function startMatch(playerOne, playerTwo) {
         data: {
             messageType: 'startMatch',
             otherPlayerName: playerTwo.getDisplayName(),
-            yourTurn: true,
+            playerNumber: 1,
             map: match.getMapId()
         }
     });
@@ -88,7 +88,7 @@ function startMatch(playerOne, playerTwo) {
         data: {
             messageType: 'startMatch',
             otherPlayerName: playerOne.getDisplayName(),
-            yourTurn: false,
+            playerNumber: 2,
             map: match.getMapId()
         }
     });
