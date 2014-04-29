@@ -64,7 +64,7 @@ function makeMove(req, res, next) {
         return;
     }
 
-    match.makeMove(body.startRow, body.startCol, body.endRow, body.endCol, Number(req.params.id));
+    match.makeMove(body.startRow, body.startCol, body.endRow, body.endCol, body.turnRight, Number(req.params.id));
     
     res.send('Move successfully made');
 };

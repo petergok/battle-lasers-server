@@ -27,10 +27,11 @@ Match.prototype.getMapId = function() {
     return this.mapId;
 };
 
-Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, playerId) {
+Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRight, playerId) {
     var message = new gcm.Message({
         data: {
             messageType: 'move',
+            turnRight: turnRight,
             startRow: 11 - startRow,
             startCol: startCol,
             endRow: 11 - endRow,
