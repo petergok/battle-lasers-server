@@ -32,9 +32,9 @@ Match.prototype.makeMove = function (startX, startY, endX, endY, playerId) {
         data: {
             messageType: 'move',
             startX: startX,
-            startY: startY,
+            startY: 11 - startY,
             endX: endX,
-            endY: endY
+            endY: 11 - endY
         }
     });
 
