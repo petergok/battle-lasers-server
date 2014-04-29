@@ -28,7 +28,7 @@ function registerPlayer(req, res, next) {
     'use strict';
     console.log(req.body);
     if (!req.body || !req.body.registrationId || !req.body.rating || !Number(req.body.rating)) {
-        res.send('Body invalid');
+        res.status(400).send('Body invalid');
         return;
     }
     
@@ -57,7 +57,7 @@ function makeMove(req, res, next) {
     if (match) {
         var body = req.body;
         if (!body || !body.startX || !body.startY || !body.endX || !body.endY) {
-            res.send('Body invalid');
+            res.status(400).send('Body invalid');
             return;
         }
 
