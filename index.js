@@ -26,6 +26,7 @@ app.put('/player/:id/move', makeMove);
 
 function registerPlayer(req, res, next) {
     'use strict';
+    console.log(req.body);
     if (!req.body || !req.body.registrationId || !req.body.rating || !Number(req.body.rating)) {
         res.status(400).send('Body invalid');
         return;
