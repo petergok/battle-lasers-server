@@ -38,7 +38,7 @@ Match.prototype.makeMove = function (startX, startY, endX, endY, playerId) {
         }
     });
 
-    if (playerId == playerOne.playerId) {
+    if (playerId == this.playerOne.playerId) {
         this.playerTwo.sendMessage(message);
     } else {
         this.playerOne.sendMessage(message);
