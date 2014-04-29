@@ -5,7 +5,7 @@ var gcm = require('node-gcm');
 var mapLoader = require('./libs/mapLoader');
 
 var Player = require('./libs/player');
-var Match = require('./libs/match')
+var Match = require('./libs/match');
 
 var app = express(),
     maps = mapLoader.loadMaps(),
@@ -27,22 +27,23 @@ if ('development' == app.get('env')) {
 app.set('port', Number(process.env.PORT || 8080));
 
 app.put('/player', registerPlayer);
+app.put('/player/:id/move', makeMove);
 
 function registerPlayer(req, res, next) {
     'use strict';
-    if (!req.query || !req.query.registrationId || !req.query.rating) {
-        res.status(400).send('Parameters missing');
+    if (!req.body || !req.body.registrationId || !req.body.rating || !Number(req.body.rating)) {
+        res.status(400).send('Body invalid');
         return;
     }
     
-    var newUser = new Player(req.query.registrationId, req.query.rating, req.query.userName);
-    var hash = newUser.getGcmId();
-    if (userRegistered[hash]) {
+    var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
+    var gcmId = newUser.getGcmId();
+    if (userRegistered[gcmId]) {
         res.send('User already registered');
         return;
     }
 
-    userRegistered[hash] = true;
+    userRegistered[gcmId] = true;
     newUser.playerId = ++lastId;
     players[newUser.playerId] = newUser;
 
@@ -53,6 +54,11 @@ function registerPlayer(req, res, next) {
     if (otherUser) {
         startMatch(otherUser, newUser);
     }
+};
+
+function makeMove(req, res, next) {
+    var match = matches[req.params.id];
+
 };
 
 function matchUser(newUser) {
