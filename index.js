@@ -90,7 +90,7 @@ function startMatch(playerOne, playerTwo) {
             messageType: 'startMatch',
             otherPlayerName: playerTwo.getDisplayName(),
             playerNumber: 1,
-            map: match.getMapId()
+            mapId: match.getMapId()
         }
     });
 
@@ -99,7 +99,7 @@ function startMatch(playerOne, playerTwo) {
             messageType: 'startMatch',
             otherPlayerName: playerOne.getDisplayName(),
             playerNumber: 2,
-            map: match.getMapId()
+            mapId: match.getMapId()
         }
     });
 
