@@ -1,4 +1,5 @@
 var Constants = require('./constants');
+var gcm = require('node-gcm');
 
 function Match(playerOne, playerTwo) {
     this.playerOne = playerOne;
@@ -24,6 +25,24 @@ Match.prototype.getMapId = function() {
     }
      
     return this.mapId;
+};
+
+Match.prototype.makeMove = function (startX, startY, endX, endY, playerId) {
+    var message = new gcm.Message({
+        data: {
+            messageType: 'move',
+            startX: startX,
+            startY: startY,
+            endX: endX,
+            endY: endY
+        }
+    });
+
+    if (playerId == playerOne.playerId) {
+        playerTwo.sendMessage(message);
+    } else {
+        playerOne.sendMessage(message);
+    }
 };
 
 module.exports = Match;
