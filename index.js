@@ -54,15 +54,19 @@ function registerPlayer(req, res, next) {
 
 function makeMove(req, res, next) {
     var match = matches[Number(req.params.id)];
-    if (match) {
-        var body = req.body;
-        if (!body || !body.startX || !body.startY || !body.endX || !body.endY) {
-            res.status(400).send('Body invalid');
-            return;
-        }
-
-        match.makeMove(body.startX, body.startY, body.endX, body.endY, Number(req.params.id));
+    if (!match) {
+        res.send('Match not found');
     }
+        
+    var body = req.body;
+    if (!body || !body.startRow || !body.startCol || !body.endRow || !body.endCol) {
+        res.status(400).send('Body invalid');
+        return;
+    }
+
+    match.makeMove(body.startRow, body.startCol, body.endRow, body.endCol, Number(req.params.id));
+    
+    res.send('Move successfully made');
 };
 
 function matchUser(newUser) {
