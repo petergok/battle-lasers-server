@@ -41,9 +41,9 @@ Match.prototype.makeMove = function (startX, startY, endX, endY, playerId) {
     });
 
     if (playerId == playerOne.playerId) {
-        playerTwo.sendMessage(message);
+        this.playerTwo.sendMessage(message);
     } else {
-        playerOne.sendMessage(message);
+        this.playerOne.sendMessage(message);
     }
 };
 
