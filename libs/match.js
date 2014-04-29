@@ -23,6 +23,8 @@ Match.prototype.getMapId = function() {
     if (!this.mapId) {
         this.mapId = (Math.random() * Number(Constants.NUMBER_OF_MAPS)) | 0;
     }
+
+    console.log(this.mapId);
      
     return this.mapId;
 };
