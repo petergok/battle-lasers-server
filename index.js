@@ -13,7 +13,6 @@ var app = express(),
     players = {},
     unmatchedUsers = [],
     matches = {},
-    matches = {},
     lastId = 0;
 
 app.use(logfmt.requestLogger());
@@ -23,6 +22,7 @@ app.set('port', Number(process.env.PORT || 8080));
 
 app.put('/player', registerPlayer);
 app.put('/player/:id/move', makeMove);
+app.delete('/player/:id', deletePlayer);
 
 function registerPlayer(req, res, next) {
     'use strict';
@@ -67,6 +67,40 @@ function makeMove(req, res, next) {
     match.makeMove(body.startRow, body.startCol, body.endRow, body.endCol, body.turnRight, Number(req.params.id));
     
     res.send('Move successfully made');
+};
+
+function deletePlayer(req, res, next) {
+    var playerId = Number(req.params.id);
+    var quitPlayer = players[playerId];
+
+    if (quitPlayer === undefined) {
+        res.send('Player already deleted');
+        return;
+    }
+
+    var match = matches[playerId];
+    if (match) {
+        match.endGame(playerId);
+        var otherPlayerId = match.getOtherPlayerId(playerId);
+        var otherPlayer = players[otherPlayerId];
+        delete match[playerId];
+        delete match[otherPlayerId];
+        delete players[quitPlayer];
+        delete players[otherPlayerId];
+        delete userRegistered[quitPlayer.getGcmId()];
+        delete userRegistered[otherPlayer.getGcmId()];
+        res.send('Match and Player deleted successfully');
+        return;
+    }
+
+    var unmatchedIndex = unmatchedUsers.indexOf(quitPlayer);
+    if (unmatchedIndex >= 0) {
+        unmatchedUsers.splice(unmatchedIndex, 1);
+    }
+
+    delete userRegistered[quitPlayer.getGcmId];
+    delete players[playerId];
+    res.send('Player only successfully deleted');
 };
 
 function matchUser(newUser) {

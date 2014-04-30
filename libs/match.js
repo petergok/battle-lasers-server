@@ -39,11 +39,33 @@ Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRig
         }
     });
 
-    if (playerId == this.playerOne.playerId) {
+    if (playerId === this.playerOne.playerId) {
         this.playerTwo.sendMessage(message);
     } else {
         this.playerOne.sendMessage(message);
     }
+};
+
+Match.prototype.endGame = function(quitPlayerId) {
+    var message = new gcm.message({
+        data: {
+            messageType: 'endGame'
+        }
+    });
+
+    if (quitPlayerId === this.playerOne.playerId) {
+        this.playerTwo.sendMessage(message);
+    } else {
+        this.playerOne.sendMessage(message);
+    }
+};
+
+Match.prototype.getOtherPlayerId = function(playerId) {
+    if (playerId === this.playerOne.playerId) {
+        return this.playerOn.playerId;
+    }
+
+    return this.playerTwo.playerId;
 };
 
 module.exports = Match;
