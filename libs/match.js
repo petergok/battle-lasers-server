@@ -62,7 +62,7 @@ Match.prototype.endGame = function(quitPlayerId) {
 
 Match.prototype.getOtherPlayerId = function(playerId) {
     if (playerId === this.playerOne.playerId) {
-        return this.playerOn.playerId;
+        return this.playerOne.playerId;
     }
 
     return this.playerTwo.playerId;
