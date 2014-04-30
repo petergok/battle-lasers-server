@@ -47,7 +47,7 @@ Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRig
 };
 
 Match.prototype.endGame = function(quitPlayerId) {
-    var message = new gcm.message({
+    var message = new gcm.Message({
         data: {
             messageType: 'endGame'
         }
