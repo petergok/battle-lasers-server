@@ -99,7 +99,7 @@ function deletePlayer(req, res, next) {
         unmatchedUsers.splice(unmatchedIndex, 1);
     }
 
-    delete userRegistered[quitPlayer.getGcmId];
+    delete userRegistered[quitPlayer.getGcmId()];
     delete players[playerId];
     res.send('Player only successfully deleted');
 };
