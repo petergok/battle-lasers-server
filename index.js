@@ -56,6 +56,7 @@ function makeMove(req, res, next) {
     var match = matches[Number(req.params.id)];
     if (!match) {
         res.send('Match not found');
+        return;
     }
         
     var body = req.body;
