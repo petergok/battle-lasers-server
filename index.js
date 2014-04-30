@@ -32,8 +32,8 @@ function registerPlayer(req, res, next) {
         return;
     }
     
-    var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName),
-        gcmId = newUser.getGcmId();
+    var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
+    var gcmId = newUser.getGcmId();
     if (userRegistered[gcmId]) {
         res.send('User already registered');
         return;
@@ -53,7 +53,6 @@ function registerPlayer(req, res, next) {
 };
 
 function makeMove(req, res, next) {
-    'use strict';
     var match = matches[Number(req.params.id)];
     if (!match) {
         res.send('Match not found');
@@ -72,11 +71,8 @@ function makeMove(req, res, next) {
 };
 
 function deletePlayer(req, res, next) {
-    'use strict';
     var playerId = Number(req.params.id);
     var quitPlayer = players[playerId];
-    console.log("quitPlayer: " + quitPlayer);
-    console.log("playerId: " + playerId);
 
     if (quitPlayer === undefined) {
         res.send('Player already deleted');
@@ -88,12 +84,12 @@ function deletePlayer(req, res, next) {
         match.endGame(playerId);
         var otherPlayerId = match.getOtherPlayerId(playerId);
         var otherPlayer = players[otherPlayerId];
-        console.log(delete match[playerId]);
-        console.log(delete match[otherPlayerId]);
-        console.log(delete players[quitPlayer]);
-        console.log(delete players[otherPlayerId]);
-        console.log(delete userRegistered[quitPlayer.getGcmId()]);
-        console.log(delete userRegistered[otherPlayer.getGcmId()]);
+        delete match[playerId];
+        delete match[otherPlayerId];
+        delete players[quitPlayer];
+        delete players[otherPlayerId];
+        delete userRegistered[quitPlayer.getGcmId()];
+        delete userRegistered[otherPlayer.getGcmId()];
         res.send('Match and Player deleted successfully');
         return;
     }
@@ -109,7 +105,6 @@ function deletePlayer(req, res, next) {
 };
 
 function matchUser(newUser) {
-    'use strict';
     if (unmatchedUsers.length) {
         for (var index = 0; index < unmatchedUsers.length; index++) {
             if (newUser.canPlay(unmatchedUsers[index])) {
@@ -123,7 +118,6 @@ function matchUser(newUser) {
 };
 
 function startMatch(playerOne, playerTwo) {
-    'use strict';
     console.log("Creating match between: " + playerOne.playerId + " and " + playerTwo.playerId);
 
     var match = new Match(playerOne, playerTwo);
