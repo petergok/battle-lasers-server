@@ -36,7 +36,7 @@ function registerPlayer(req, res, next) {
     var gcmId = newUser.getGcmId();
     // User already registered
     if (userRegistered[gcmId]) {
-        res.send(userRegistered[gcmId].playerId);
+        res.send('' + userRegistered[gcmId].playerId);
         return;
     }
 
