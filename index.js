@@ -34,12 +34,13 @@ function registerPlayer(req, res, next) {
     
     var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
     var gcmId = newUser.getGcmId();
+    // User already registered
     if (userRegistered[gcmId]) {
-        res.send('User already registered');
+        res.send(userRegistered[gcmId].playerId);
         return;
     }
 
-    userRegistered[gcmId] = true;
+    userRegistered[gcmId] = newUser;
     newUser.playerId = ++lastId;
     players[newUser.playerId] = newUser;
 
