@@ -127,8 +127,9 @@ function startMatch(playerOne, playerTwo) {
 
     var messageToOne = new gcm.Message({
         data: {
-            messageType: 'startMatch',
+            messageType: 'matchFound',
             otherPlayerName: playerTwo.getDisplayName(),
+            otherPlayerRating: playerTwo.getRating(),
             playerNumber: 1,
             mapId: match.getMapId()
         }
@@ -136,8 +137,9 @@ function startMatch(playerOne, playerTwo) {
 
     var messageToTwo = new gcm.Message({
         data: {
-            messageType: 'startMatch',
+            messageType: 'matchFound',
             otherPlayerName: playerOne.getDisplayName(),
+            otherPlayerRatng: playerOne.getRating(),
             playerNumber: 2,
             mapId: match.getMapId()
         }

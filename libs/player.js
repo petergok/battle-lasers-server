@@ -30,6 +30,10 @@ Player.prototype.canPlay = function(otherUser) {
     return false;
 };
 
+Player.prototype.getRating = function() {
+    return this.rating;
+}
+
 Player.prototype.sendMessage = function(message) {
     var registrationIds = [];
 
