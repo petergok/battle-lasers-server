@@ -30,8 +30,6 @@ Match.prototype.getMapId = function() {
 
 Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRight, playerId) {
     var message = new gcm.Message({
-        delayWhileIdle: true,
-        timeToLive: 3,
         data: {
             messageType: 'move',
             turnRight: turnRight,
@@ -57,14 +55,12 @@ Match.prototype.userAccepted = function(playerId) {
         }
     } else {
         this.playerTwo.accepted = true;
-        if (!this.playerOne.accepted) {
+        if (!this.playerOnehero.accepted) {
             return;
         }
     }
 
     this.sendMessage(new gcm.Message({
-        delayWhileIdle: true,
-        timeToLive: 3,
         data: {
             messageType: 'matchStart'
         }
@@ -73,8 +69,6 @@ Match.prototype.userAccepted = function(playerId) {
 
 Match.prototype.end = function(quitPlayerId) {
     var message = new gcm.Message({
-        delayWhileIdle: true,
-        timeToLive: 3,
         data: {
             messageType: 'matchEnd'
         }
