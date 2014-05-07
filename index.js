@@ -35,10 +35,10 @@ function registerPlayer(req, res, next) {
     }
     
     var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
-    addPlayer(newUser)
+    addPlayer(newUser, res);
 };
 
-function addPlayer(newUser) {
+function addPlayer(newUser, res) {
     var gcmId = newUser.getGcmId();
     // User already registered
     if (userRegistered[gcmId]) {
