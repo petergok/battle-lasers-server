@@ -55,7 +55,7 @@ Match.prototype.userAccepted = function(playerId) {
         }
     } else {
         this.playerTwo.accepted = true;
-        if (!this.playerOnehero.accepted) {
+        if (!this.playerOne.accepted) {
             return;
         }
     }
