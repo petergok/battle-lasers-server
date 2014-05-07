@@ -50,7 +50,7 @@ Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRig
 };
 
 Match.prototype.userAccepted = function(playerId) {
-    if (playerId === this.playerOn.playerId) {
+    if (playerId === this.playerOne.playerId) {
         this.playerOne.accepted = true;
         if (!this.playerTwo.accepted) {
             return;

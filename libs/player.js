@@ -43,6 +43,7 @@ Player.prototype.sendMessage = function(message) {
 
     sender.send(message, registrationIds, 4, function(err, result) {
         console.log(result);
+        console.log(err);
     });
 };
 

@@ -159,7 +159,7 @@ function startMatch(playerOne, playerTwo) {
         data: {
             messageType: 'matchFound',
             otherPlayerName: playerOne.getDisplayName(),
-            otherPlayerRatng: playerOne.getRating(),
+            otherPlayerRating: playerOne.getRating(),
             playerNumber: 2,
             mapId: match.getMapId()
         }
