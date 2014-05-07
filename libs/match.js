@@ -7,6 +7,7 @@ function Match(playerOne, playerTwo) {
 };
 
 Match.prototype.sendMessage = function(message, whichPlayer) {
+    console.log("Sending Message");
     if (whichPlayer) {
         if (whichPlayer === 1) {
             this.playerOne.sendMessage(message);
@@ -61,7 +62,7 @@ Match.prototype.userAccepted = function(playerId) {
         }
     }
 
-    sendMessage(new gcm.Message({
+    this.sendMessage(new gcm.Message({
         delayWhileIdle: true,
         timeToLive: 3,
         data: {

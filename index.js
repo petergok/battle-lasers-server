@@ -146,8 +146,6 @@ function startMatch(playerOne, playerTwo) {
     matches[playerTwo.playerId] = match;
 
     var messageToOne = new gcm.Message({
-        delayWhileIdle: true,
-        timeToLive: 3,
         data: {
             messageType: 'matchFound',
             otherPlayerName: playerTwo.getDisplayName(),
@@ -158,8 +156,6 @@ function startMatch(playerOne, playerTwo) {
     });
 
     var messageToTwo = new gcm.Message({
-        delayWhileIdle: true,
-        timeToLive: 3,
         data: {
             messageType: 'matchFound',
             otherPlayerName: playerOne.getDisplayName(),
