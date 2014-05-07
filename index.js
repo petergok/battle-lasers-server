@@ -21,6 +21,8 @@ app.use(require('connect').bodyParser());
 app.set('port', Number(process.env.PORT || 8080));
 
 app.put('/player', registerPlayer);
+app.put('/player/:id/accept', acceptMatch);
+app.put('/player/:id/decline', declineMatch);
 app.put('/player/:id/move', makeMove);
 app.delete('/player/:id', deletePlayer);
 
@@ -33,6 +35,10 @@ function registerPlayer(req, res, next) {
     }
     
     var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
+    addPlayer(newUser)
+};
+
+function addPlayer(newUser) {
     var gcmId = newUser.getGcmId();
     // User already registered
     if (userRegistered[gcmId]) {
@@ -72,7 +78,21 @@ function makeMove(req, res, next) {
 };
 
 function deletePlayer(req, res, next) {
+    endMatch(Number(req.params.id), res);
+};
+
+function acceptMatch(req, res, next) {
     var playerId = Number(req.params.id);
+    var match = matches[playerId];
+
+    match.userAccepted(playerId);
+};
+
+function declineMatch(req, res, next) {
+    endMatch(Number(req.params.id), res);
+};
+
+function endMatch(playerId, res) {
     var quitPlayer = players[playerId];
 
     if (quitPlayer === undefined) {
@@ -82,7 +102,7 @@ function deletePlayer(req, res, next) {
 
     var match = matches[playerId];
     if (match) {
-        match.endGame(playerId);
+        match.end(playerId);
         var otherPlayerId = match.getOtherPlayerId(playerId);
         var otherPlayer = players[otherPlayerId];
         delete match[playerId];
@@ -103,7 +123,7 @@ function deletePlayer(req, res, next) {
     delete userRegistered[quitPlayer.getGcmId()];
     delete players[playerId];
     res.send('Player only successfully deleted');
-};
+}
 
 function matchUser(newUser) {
     if (unmatchedUsers.length) {
@@ -126,6 +146,8 @@ function startMatch(playerOne, playerTwo) {
     matches[playerTwo.playerId] = match;
 
     var messageToOne = new gcm.Message({
+        delayWhileIdle: true,
+        timeToLive: 3,
         data: {
             messageType: 'matchFound',
             otherPlayerName: playerTwo.getDisplayName(),
@@ -136,6 +158,8 @@ function startMatch(playerOne, playerTwo) {
     });
 
     var messageToTwo = new gcm.Message({
+        delayWhileIdle: true,
+        timeToLive: 3,
         data: {
             messageType: 'matchFound',
             otherPlayerName: playerOne.getDisplayName(),

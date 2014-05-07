@@ -29,6 +29,8 @@ Match.prototype.getMapId = function() {
 
 Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRight, playerId) {
     var message = new gcm.Message({
+        delayWhileIdle: true,
+        timeToLive: 3,
         data: {
             messageType: 'move',
             turnRight: turnRight,
@@ -40,23 +42,47 @@ Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRig
     });
 
     if (playerId === this.playerOne.playerId) {
-        this.playerTwo.sendMessage(message);
+        sendMessage(message, this.playerTwo.playerId);
     } else {
-        this.playerOne.sendMessage(message);
+        sendMessage(message, this.playerOne.playerId);
     }
 };
 
-Match.prototype.endGame = function(quitPlayerId) {
-    var message = new gcm.Message({
+Match.prototype.userAccepted = function(playerId) {
+    if (playerId === this.playerOn.playerId) {
+        this.playerOne.accepted = true;
+        if (!this.playerTwo.accepted) {
+            return;
+        }
+    } else {
+        this.playerTwo.accepted = true;
+        if (!this.playerOne.accepted) {
+            return;
+        }
+    }
+
+    sendMessage(new gcm.Message({
+        delayWhileIdle: true,
+        timeToLive: 3,
         data: {
-            messageType: 'endGame'
+            messageType: 'matchStart'
+        }
+    }));
+};
+
+Match.prototype.end = function(quitPlayerId) {
+    var message = new gcm.Message({
+        delayWhileIdle: true,
+        timeToLive: 3,
+        data: {
+            messageType: 'endMatch'
         }
     });
 
     if (quitPlayerId === this.playerOne.playerId) {
-        this.playerTwo.sendMessage(message);
+        sendMessage(message, this.playerTwo.playerId);
     } else {
-        this.playerOne.sendMessage(message);
+        sendMessage(message, this.playerOne.playerId);
     }
 };
 
