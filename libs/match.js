@@ -21,7 +21,7 @@ Match.prototype.sendMessage = function(message, whichPlayer) {
 };
 
 Match.prototype.getMapId = function() {
-    if (!this.mapId) {
+    if (this.mapId === undefined) {
         this.mapId = (Math.random() * Number(Constants.NUMBER_OF_MAPS)) | 0;
     }
      
