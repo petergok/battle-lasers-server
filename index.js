@@ -42,6 +42,10 @@ function addPlayer(newUser, res) {
     var gcmId = newUser.getGcmId();
     // User already registered
     if (userRegistered[gcmId]) {
+        var playerId = userRegistered[gcmId].playerId;
+        if (matches[playerId]) {
+            endMatch(playerId, res, false);
+        }
         res.send('' + userRegistered[gcmId].playerId);
         return;
     }
@@ -92,11 +96,13 @@ function declineMatch(req, res, next) {
     endMatch(Number(req.params.id), res);
 };
 
-function endMatch(playerId, res) {
+function endMatch(playerId, res, sendResponse) {
     var quitPlayer = players[playerId];
 
     if (quitPlayer === undefined) {
-        res.send('Player already deleted');
+        if (sendResponse) {
+            res.send('Player already deleted');
+        }
         return;
     }
 
@@ -111,7 +117,9 @@ function endMatch(playerId, res) {
         delete players[otherPlayerId];
         delete userRegistered[quitPlayer.getGcmId()];
         delete userRegistered[otherPlayer.getGcmId()];
-        res.send('Match and Player deleted successfully');
+        if (sendResponse) {
+            res.send('Match and Player deleted successfully');
+        }
         return;
     }
 
@@ -122,7 +130,9 @@ function endMatch(playerId, res) {
 
     delete userRegistered[quitPlayer.getGcmId()];
     delete players[playerId];
-    res.send('Player only successfully deleted');
+    if (sendResponse) {
+        res.send('Player only successfully deleted');
+    }
 }
 
 function matchUser(newUser) {
