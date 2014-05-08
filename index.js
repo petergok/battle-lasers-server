@@ -36,6 +36,7 @@ function registerPlayer(req, res, next) {
     
     var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
     addPlayer(newUser, res);
+    res.send('Player registered');
 };
 
 function addPlayer(newUser, res) {
@@ -84,6 +85,7 @@ function makeMove(req, res, next) {
 
 function deletePlayer(req, res, next) {
     endMatch(Number(req.params.id), res, true);
+    res.send('Delete completed');
 };
 
 function acceptMatch(req, res, next) {
@@ -91,10 +93,12 @@ function acceptMatch(req, res, next) {
     var match = matches[playerId];
 
     match.userAccepted(playerId);
+    res.send('User accepted');
 };
 
 function declineMatch(req, res, next) {
     endMatch(Number(req.params.id), res, true);
+    res.send('Match declined');
 };
 
 function endMatch(playerId, res, sendResponse) {
