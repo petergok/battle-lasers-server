@@ -41,9 +41,9 @@ Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRig
     });
 
     if (playerId === this.playerOne.playerId) {
-        this.sendMessage(message, this.playerTwo.playerId);
+        this.sendMessage(message, 2);
     } else {
-        this.sendMessage(message, this.playerOne.playerId);
+        this.sendMessage(message, 1);
     }
 };
 
@@ -75,9 +75,9 @@ Match.prototype.end = function(quitPlayerId) {
     });
 
     if (quitPlayerId === this.playerOne.playerId) {
-        this.sendMessage(message, this.playerTwo.playerId);
+        this.sendMessage(message, 2);
     } else {
-        this.sendMessage(message, this.playerOne.playerId);
+        this.sendMessage(message, 1);
     }
 };
 
