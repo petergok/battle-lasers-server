@@ -30,7 +30,6 @@ Match.prototype.getMapId = function() {
 
 Match.prototype.makeMove = function (startRow, startCol, endRow, endCol, turnRight, playerId) {
     var message = new gcm.Message({
-        delayWhileIdle: false,
         data: {
             messageType: 'move',
             turnRight: turnRight,
@@ -62,7 +61,6 @@ Match.prototype.userAccepted = function(playerId) {
     }
 
     this.sendMessage(new gcm.Message({
-        delayWhileIdle: false,
         data: {
             messageType: 'matchStart'
         }
@@ -71,7 +69,6 @@ Match.prototype.userAccepted = function(playerId) {
 
 Match.prototype.end = function(quitPlayerId) {
     var message = new gcm.Message({
-        delayWhileIdle: false,
         data: {
             messageType: 'matchEnd'
         }
