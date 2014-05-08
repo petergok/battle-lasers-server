@@ -23,6 +23,7 @@ Player.prototype.getDisplayName = function() {
 };
 
 Player.prototype.canPlay = function(otherUser) {
+    return true;
     if (otherUser && otherUser.rating) {
         var diff = otherUser.rating - this.rating;
         return (diff >= -400 && diff <= 400);
