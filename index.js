@@ -45,6 +45,7 @@ function addPlayer(newUser, res) {
         var playerId = userRegistered[gcmId].playerId;
         if (matches[playerId]) {
             endMatch(playerId, res, false);
+            return;
         }
         res.send('' + userRegistered[gcmId].playerId);
         return;
@@ -82,7 +83,7 @@ function makeMove(req, res, next) {
 };
 
 function deletePlayer(req, res, next) {
-    endMatch(Number(req.params.id), res);
+    endMatch(Number(req.params.id), res, true);
 };
 
 function acceptMatch(req, res, next) {
@@ -93,7 +94,7 @@ function acceptMatch(req, res, next) {
 };
 
 function declineMatch(req, res, next) {
-    endMatch(Number(req.params.id), res);
+    endMatch(Number(req.params.id), res, true);
 };
 
 function endMatch(playerId, res, sendResponse) {
