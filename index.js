@@ -26,6 +26,19 @@ app.put('/player/:id/decline', declineMatch);
 app.put('/player/:id/move', makeMove);
 app.delete('/player/:id', deletePlayer);
 
+function clearData() {
+    for (var key in players) {
+        var player = players[key];
+        var currentTime = new Date().getTime();
+        if (currentTime > player.timeRegistered) {
+            endMatch(player.playerId, null, false);
+        }
+    }
+    setInterval(clearData(), 1000);
+};
+
+clearData();
+
 function registerPlayer(req, res, next) {
     'use strict';
     console.log(req.body);
@@ -53,6 +66,9 @@ function addPlayer(newUser, res) {
     }
 
     userRegistered[gcmId] = newUser;
+    var timeRegistered = new Date().getTime;
+    newUser.timeRegistered = timeRegistered;
+
     newUser.playerId = ++lastId;
     players[newUser.playerId] = newUser;
 
@@ -61,7 +77,7 @@ function addPlayer(newUser, res) {
 
     var otherUser = matchUser(newUser);
     if (otherUser) {
-        startMatch(otherUser, newUser);
+        startMatch(otherUser, newUser, timeRegistered);
     }
 };
 
@@ -153,10 +169,15 @@ function matchUser(newUser) {
     return undefined;
 };
 
-function startMatch(playerOne, playerTwo) {
+function startMatch(playerOne, playerTwo, timeRegistered) {
     console.log("Creating match between: " + playerOne.playerId + " and " + playerTwo.playerId);
 
     var match = new Match(playerOne, playerTwo);
+
+    playerOne.timeRegistered = timeRegistered;
+    playerTwo.timeRegistered = timeRegistered;
+    match.timeRegistered = timeRegistered;
+
     matches[playerOne.playerId] = match;
     matches[playerTwo.playerId] = match;
 
