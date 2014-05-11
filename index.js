@@ -34,7 +34,7 @@ function clearData() {
             endMatch(player.playerId, null, false);
         }
     }
-    setInterval(clearData, 1000);
+    setInterval(clearData, 10000);
 };
 
 clearData();
