@@ -28,9 +28,11 @@ app.delete('/player/:id', deletePlayer);
 
 function clearData() {
     for (var key in players) {
+        console.log("clearing data");
         var player = players[key];
         var currentTime = new Date().getTime();
         if (currentTime > player.timeRegistered) {
+            console.log("deleting player");
             endMatch(player.playerId, null, false);
         }
     }
