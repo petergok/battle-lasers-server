@@ -36,10 +36,9 @@ function clearData() {
             endMatch(player.playerId, null, false);
         }
     }
-    setInterval(clearData, 10000);
 };
 
-clearData();
+setInterval(clearData, 10000);
 
 function registerPlayer(req, res, next) {
     'use strict';
