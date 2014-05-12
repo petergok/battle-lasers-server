@@ -31,14 +31,14 @@ function clearData() {
         console.log("clearing data");
         var player = players[key];
         var currentTime = new Date().getTime();
-        if (currentTime > player.timeRegistered) {
+        if (currentTime > player.timeRegistered + 28800000) {
             console.log("deleting player");
             endMatch(player.playerId, null, false);
         }
     }
 };
 
-setInterval(clearData, 10000);
+setInterval(clearData, 43200000);
 
 function registerPlayer(req, res, next) {
     'use strict';
