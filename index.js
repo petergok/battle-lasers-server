@@ -67,7 +67,7 @@ function addPlayer(newUser, res) {
     }
 
     userRegistered[gcmId] = newUser;
-    var timeRegistered = new Date().getTime;
+    var timeRegistered = new Date().getTime();
     newUser.timeRegistered = timeRegistered;
 
     newUser.playerId = ++lastId;
