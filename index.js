@@ -50,7 +50,7 @@ function registerPlayer(req, res, next) {
     
     var newUser = new Player(req.body.registrationId, Number(req.body.rating), req.body.userName);
     addPlayer(newUser, res);
-    res.send('Player registered');
+    res.send('' + newUser.playerId);
 };
 
 function addPlayer(newUser, res) {
